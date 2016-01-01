@@ -101,7 +101,7 @@ public class Main {
 	    
 	    //Insertion Sort annd bubbleSort
 	    int [] arrayToBeSorted = {2, 1, -88, -9, 4};
-	    int [] sortedArray = selectionSort(arrayToBeSorted);
+	    int [] sortedArray = bubbleSort(arrayToBeSorted);
     	System.out.print("InsertionSort :- ");
 
 	    for(int i = 0; i < sortedArray.length; ++i) {

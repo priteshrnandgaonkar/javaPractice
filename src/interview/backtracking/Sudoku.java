@@ -73,8 +73,8 @@ public class Sudoku {
                    {9, 0, 0, 8, 6, 3, 0, 0, 5},
                    {0, 5, 0, 0, 9, 0, 6, 0, 0},
                    {1, 3, 0, 0, 0, 0, 2, 5, 0},
-                   {0, 0, 0, 0, 0, 0, 0, 7, 4},
-                   {0, 0, 5, 2, 0, 6, 3, 0, 0}};	
+                   {6, 9, 0, 0, 5, 1, 8, 7, 4},
+                   {7, 4, 5, 2, 8, 6, 3, 1, 9}};	
 		   
 		   int [][] grid2 = {{2,0},
 		   					 {0,2}};	
@@ -86,9 +86,9 @@ public class Sudoku {
 				   {6, 4, 0, 0, 1, 3},
 				   {0, 1, 3, 4, 5, 0}};
 		   
-		   if(sudokuSolver(grid3, 6)){
+		   if(sudokuSolver(grid, 9)){
 			   System.out.println("Sudoku solved, just for u");
-			   printMatrix(grid3, 6);
+			   printMatrix(grid, 9);
 		   }
 		   else{
 			   System.out.println("Sudoku cannot be solved with the current configuration");

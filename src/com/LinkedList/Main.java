@@ -4,6 +4,7 @@
 package com.LinkedList;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -53,7 +54,8 @@ public class Main {
 		System.out.println("Dog = "+maxDog.name);
 		
 		int arr[] = {45,32,23,21,1};//{1, 2, 3, 4, 5, 19, 21, 34, -1, -56};//{5,  9 , 13, 14, 1, 3};
-		System.out.println("" + findMaxInCircularSortedArray(arr, 0, arr.length-1));
+		int circularlySortedArray [] =  {62, 63, 64, -5, 6, 7, 8, 10}; //{5,  9 , 13, 14, 1, 3}; //{18, 19, 4, 5, 17}; 
+		System.out.println("Max in circular array -> " + findMaxInCircularSortedArray(circularlySortedArray, 0, circularlySortedArray.length-1));
 		String arr1[] = {"a","b","c"};
 		
 		printPowerSetForGivenNumber(arr1);
@@ -75,8 +77,8 @@ public class Main {
 	    t.addLeft("1");
 	    t.addRight("5");
 	    t.getRight().addRight("5");
-	    t.getLeft().addLeft("5");
-	    t.getLeft().addRight("5");
+	    t.getLeft().addLeft("3");
+	    t.getLeft().addRight("4");
 	    
 	    Node t2 = new Node("1", null, null);
 	    t2.addLeft("3");
@@ -97,8 +99,10 @@ public class Main {
 	    numberOfSinglyTree(t);
 	    
 	    System.out.println("Number of singly Value tree "+ num);
-	    System.out.println(preorderTraversal(t));
-	    
+	    System.out.println("Preorder traversal "+preorderTraversal(t));
+	    System.out.println("Inorder traversal "+inorderTraversal(t));
+//	   inorderTraversalIterative(t);
+
 	    //Insertion Sort annd bubbleSort
 	    int [] arrayToBeSorted = {2, 1, -88, -9, 4};
 	    int [] sortedArray = bubbleSort(arrayToBeSorted);
@@ -257,25 +261,29 @@ public class Main {
 
 	// Maximum in circularly sorted array
 	public static int findMaxInCircularSortedArray(int array[], int low, int high) {
+		int n = array.length;
 		if(high < low) {
 			return array[0];
 		}
-		if(high == low) {
-			return array[high];
-		}
-		
-		int mid = (int)Math.ceil((low+high)/2.0);
+
+		int mid = (int)((low+high)/2.0);
 		System.out.println(""+mid);
-		if(array[mid+1] < array[mid] && array[mid-1] < array[mid]) {
-			return array[mid];
+		if(array[(mid+1)%n] < array[mid%n] && array[(mid-1)%n] < array[mid%n]) {
+			return array[mid%n];
 		}
-		
-		if(mid < high && array[mid+1] > array[mid]) {
-			return findMaxInCircularSortedArray(array, mid+1, high);
+		if(array[mid % n] < array[(mid+1)%n] && array[mid % n] < array[(mid-1)%n]) {
+			return array[(mid-1)%n];
+		}
+		if(array[(mid+1)%n] > array[mid % n] && array[(mid+1)%n] > array[(mid+2)%n]) {
+			System.out.println("mid+1 is highest");
+			return array[(mid+1)%n];
+		}
+		if(array[(mid+1)%n] > array[mid%n]) {
+			return findMaxInCircularSortedArray(array, (mid+1)%n, high);
 		}
 		
 		else {
-			return findMaxInCircularSortedArray(array, low, mid-1);
+			return findMaxInCircularSortedArray(array, low, (mid-1)%n);
 		}
 	}
 	
@@ -307,6 +315,50 @@ public class Main {
 		nodeString += root.getRight() != null ? "," + preorderTraversal(root.getRight()) : "";
 
 		return nodeString;
+	}
+	
+	//inorder
+	public static String inorderTraversal(Node root){
+		if(root == null) {
+			return "";
+		}
+		String nodeString = "";
+		nodeString += root.getLeft() != null ? inorderTraversal(root.getLeft()) : "";
+		nodeString += root.getData()+",";
+		nodeString += root.getRight() != null ? inorderTraversal(root.getRight()) : "";
+
+		return nodeString;
+	}
+	
+	//inorder tree traversal without recursion
+	public static void inorderTraversalIterative(Node root){
+		HashMap<Node, Boolean> map = new HashMap<>();
+		Stack <Node> stack = new Stack <Node>();
+		stack.push(root);
+		map.put(root, false);
+		
+		while(!stack.isEmpty()) {
+			Node currentNode = stack.pop();
+			if(map.get(currentNode)) {
+				System.out.println(""+currentNode.getData()+",");
+			}
+			else{
+				if(currentNode.getLeft() != null)
+					stack.push(currentNode.getLeft());
+				stack.push(currentNode);
+				if(currentNode.getRight() != null)
+					stack.push(currentNode.getRight());
+				map.put(currentNode, true);
+			}
+		}
+//		if(root == null) {
+//			return "";
+//		}
+//		String nodeString = "";
+//		nodeString += root.getLeft() != null ? inorderTraversal(root.getLeft()) : "";
+//		nodeString += root.getData()+",";
+//		nodeString += root.getRight() != null ? inorderTraversal(root.getRight()) : "";
+
 	}
 	
 	//Insertion Sort

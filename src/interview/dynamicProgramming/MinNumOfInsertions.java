@@ -1,5 +1,12 @@
 package interview.dynamicProgramming;
 
+/*
+ * Min. no. of insertions to be done into string to make string pallindrome.
+ * It can be done through DP,
+ * For string[l..h]
+ * if string[l] == string[h]  then min insertions are equal to min insertions for string[l+1...h-1]
+ * else Min(min(string[l...h-1]), string[l+1...h]) + 1
+ */
 public class MinNumOfInsertions {
 
 public static int minInsertions(String s) {

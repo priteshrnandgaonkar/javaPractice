@@ -151,7 +151,7 @@ public class Main {
 	  //Is it %c to print a char?
 	  System.out.println(array[1]); //Prints the number at index zero as it's equivalent char.
 	  
-	  permutation("prit");
+	  permutation("pript");
 	  
 	  int [][] mat = { {0, 1, 1, 0},
 	  				   {1, 0, 0, 1},
@@ -530,6 +530,22 @@ public class Main {
 	
 	public static int  knapSack(int [] val, int [] wt, int W, int n) {
 		
+//		int [][] K = new int [n+1][W+1];
+//		
+//		for(int i = 0; i <=n; ++i) {
+//			for(int w = 0; w<=W; ++w) {
+//				if(w == 0 || i == 0){
+//					K[i][w] = 0;
+//				}
+//				if(wt[i-1] <= w) {
+//					K[i][w] = Math.max(K[i-1][w], K[i-1][w-wt[i-1]] + val[i-1]);
+//				}
+//				else {
+//					K[i][w] = K[i-1][w];
+//					}		
+//			}
+//		}
+//		
 		if(n == 0 || W == 0) {
 			return 0;
 		}
@@ -619,6 +635,9 @@ public class Main {
 	    return sb.toString();
 	}
 	
+	/*
+	 * Print all permutations of given string
+	 */
 	public static void permutation(String str) { 
 	    permutation("", str); 
 	}
@@ -682,6 +701,36 @@ public class Main {
 		}
 	}
 	
+public static void printJumpingNumbersUtil(int startNum, int maxNum) {
+		
+		Queue <Integer> queue = new LinkedList<Integer>();
+		queue.add(startNum);
+		
+		while(!queue.isEmpty()) {
+			int elem = queue.remove();
+			if(elem <= maxNum) {
+				System.out.print(+elem + " ");
+
+				int unitsDigitOfElem  = elem % 10;
+				if(unitsDigitOfElem == 0) {
+					int numToBeAdded = elem *10 + (unitsDigitOfElem + 1);
+					queue.add(numToBeAdded);
+				}
+				else if(unitsDigitOfElem == 9) {
+					int numToBeAdded = elem *10 + (unitsDigitOfElem - 1);
+					queue.add(+numToBeAdded);
+				}
+				else {
+					int numToBeAdded = elem *10 + (unitsDigitOfElem - 1);
+					queue.add(numToBeAdded);
+					numToBeAdded = elem *10 + (unitsDigitOfElem + 1);
+					queue.add(numToBeAdded);
+				}
+			}
+		}
+	}
+	
+	
 	public static void topologicalSortUtil(int [][] mat, int root,Stack <Integer> stack, boolean [] visited) {
 		
 		visited[root] = true;
@@ -698,11 +747,12 @@ public class Main {
 		
 		Stack <Integer> stack = new Stack<Integer>();
 		boolean visited [] = new boolean [mat.length];
+		
+        // Mark all the vertices as not visited			
 		for(int j = 0; j < visited.length; ++j) {
 			visited[j] = false;
 		}
         
-        // Mark all the vertices as not visited			
 		for(int j = 0; j < visited.length; ++j) {
 			if(!visited[j]) {
 				topologicalSortUtil(mat, j, stack, visited);
@@ -762,34 +812,6 @@ public class Main {
 		}
 	}
 	
-	public static void printJumpingNumbersUtil(int startNum, int maxNum) {
-		
-		Queue <Integer> queue = new LinkedList<Integer>();
-		queue.add(startNum);
-		
-		while(!queue.isEmpty()) {
-			int elem = queue.remove();
-			if(elem <= maxNum) {
-				System.out.print(+elem + " ");
-
-				int unitsDigitOfElem  = elem % 10;
-				if(unitsDigitOfElem == 0) {
-					int numToBeAdded = elem *10 + (unitsDigitOfElem + 1);
-					queue.add(+numToBeAdded);
-				}
-				else if(unitsDigitOfElem == 9) {
-					int numToBeAdded = elem *10 + (unitsDigitOfElem - 1);
-					queue.add(+numToBeAdded);
-				}
-				else {
-					int numToBeAdded = elem *10 + (unitsDigitOfElem - 1);
-					queue.add(+numToBeAdded);
-					numToBeAdded = elem *10 + (unitsDigitOfElem + 1);
-					queue.add(numToBeAdded);
-				}
-			}
-		}
-	}
 	
 	/*Given a 2D grid of characters and a word, find all occurrences of given word in grid. A word can be matched in all 8 directions at any point. Word is said be found in a direction if all characters match in this direction (not in zig-zag form).
 

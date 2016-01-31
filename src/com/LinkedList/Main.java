@@ -86,12 +86,11 @@ public class Main {
 	    t2.getRight().addRight("6");
 	    t2.getRight().addLeft("5");
 	    t2.getLeft().addLeft("4");
-	    t2
-	    .getLeft().addRight("7");
+	    t2.getLeft().addRight("7");
 	    System.out.println("---------------------Spiral Binary tree --------------------------------");
 
 	    printSpiralBinaryTree(t2);
-	    
+	    printSurfaceBinaryTree(t2);
 	    System.out.println("---------------------Spiral Binary tree --------------------------------");
 
 	    System.out.println("Number of singly Value tree "+ num);
@@ -389,7 +388,7 @@ public class Main {
 	//overlapping rectangle
 	public static boolean doesRectOverlap(int a1, int b1, int a2, int b2, int a3, int b3, int a4, int b4) {
 		
-		if(a2 > a4 || a3 > a2) {
+		if(a1 > a4 || a3 > a2) {
 			return false;
 		}
 		
@@ -677,6 +676,7 @@ public class Main {
 		}
 		
 	}
+
 	public static void printDFS(int [][] adjMatrix, int source) {
 		Stack<Integer> stack = new Stack<Integer>();
 		stack.push(source);
@@ -762,6 +762,47 @@ public static void printJumpingNumbersUtil(int startNum, int maxNum) {
 		while(!stack.isEmpty()) {
 			System.out.println(+stack.pop());
 		}
+	}
+	
+	public static void printleftNodes(Node root) {
+		if((root.getLeft() == null && root.getRight() == null) || root == null) {
+			return;
+		}
+		System.out.print(" "+root.getData());
+		if(root.getLeft() != null){
+			printleftNodes(root.getLeft());
+		}
+	}
+	public static void printRightNodes(Node root) {
+		if((root.getLeft() == null && root.getRight() == null) || root == null) {
+			return;
+		}
+		System.out.print(" "+root.getData());
+		if(root.getRight() != null){
+			printRightNodes(root.getRight());
+		}
+	}
+	public static void printLeafNodes(Node root) {
+		if(root == null){
+			return;
+		}
+		if(root.getLeft() == null && root.getRight() == null ) {
+			System.out.print(" "+root.getData());
+			return;
+		}
+		if(root.getLeft() != null){
+			printLeafNodes(root.getLeft());
+		}
+		if(root.getRight() != null){
+			printLeafNodes(root.getRight());
+		}
+	}
+	public static void printSurfaceBinaryTree(Node root) {
+		System.out.println("");
+		System.out.print(" "+root.getData());
+		printleftNodes(root.getLeft());
+		printLeafNodes(root);
+		printRightNodes(root.getRight());
 	}
 	
 	public static void printSpiralBinaryTree(Node root) {
